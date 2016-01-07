@@ -32,7 +32,9 @@ iqwerty.template = (function() {
 					if(typeof callback === 'function') {
 						callback(response);
 					} else {
-						console.error('Your callback is not defined in your code');
+						if(callback != null) {
+							console.error('Your callback is not defined in your code');
+						}
 					}
 				})
 				.error(() => {
