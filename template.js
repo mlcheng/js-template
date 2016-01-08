@@ -14,6 +14,9 @@
 var iqwerty = iqwerty || {};
 
 iqwerty.template = (function() {
+
+	var TEMPLATE_SRC_ATTR = 'data-iq-template-src';
+
 	function GetTemplates() {
 		setTimeout(function() {
 			if(typeof $http === 'undefined') {
@@ -21,10 +24,10 @@ iqwerty.template = (function() {
 				return;
 			}
 
-			var templates = document.querySelectorAll('[data-iq-template-src]');
+			var templates = document.querySelectorAll('[' + TEMPLATE_SRC_ATTR + ']');
 			[].slice.call(templates).forEach(template => {
 				var src = template.dataset.iqTemplateSrc;
-				var callback = template.dataset.iqTemplateCallback;
+				var callback = template.dataset.iqTemplateLoadedCallback;
 				callback = window[callback];
 				
 				$http(src)
