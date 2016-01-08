@@ -27,7 +27,7 @@ iqwerty.template = (function() {
 			var templates = document.querySelectorAll('[' + TEMPLATE_SRC_ATTR + ']');
 			[].slice.call(templates).forEach(template => {
 				var src = template.dataset.iqTemplateSrc;
-				var callback = template.dataset.iqTemplateLoadedCallback;
+				var callback = template.dataset.iqTemplateLoaded;
 				callback = window[callback];
 				
 				$http(src)
