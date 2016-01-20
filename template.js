@@ -31,22 +31,6 @@ iqwerty.template = (function() {
 				callback = window[callback];
 
 				GetTemplate(src, callback, element);
-				
-				// $http(src)
-				// 	.success(response => {
-				// 		template.insertAdjacentHTML('afterbegin', response);
-				// 		if(typeof callback === 'function') {
-				// 			callback(response);
-				// 		} else {
-				// 			if(callback != null) {
-				// 				console.error('Your callback is not defined in your code');
-				// 			}
-				// 		}
-				// 	})
-				// 	.error(() => {
-				// 		console.warn('Could not retrieve template');
-				// 	})
-				// 	.get();
 			});
 		}, 0);
 	}
