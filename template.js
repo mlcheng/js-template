@@ -25,32 +25,58 @@ iqwerty.template = (function() {
 			}
 
 			var templates = document.querySelectorAll('[' + TEMPLATE_SRC_ATTR + ']');
-			[].slice.call(templates).forEach(template => {
-				var src = template.dataset.iqTemplateSrc;
-				var callback = template.dataset.iqTemplateLoaded;
+			[].slice.call(templates).forEach(element => {
+				var src = element.dataset.iqTemplateSrc;
+				var callback = element.dataset.iqTemplateLoaded;
 				callback = window[callback];
+
+				GetTemplate(src, callback, element);
 				
-				$http(src)
-					.success(response => {
-						template.insertAdjacentHTML('afterbegin', response);
-						if(typeof callback === 'function') {
-							callback(response);
-						} else {
-							if(callback != null) {
-								console.error('Your callback is not defined in your code');
-							}
-						}
-					})
-					.error(() => {
-						console.warn('Could not retrieve template');
-					})
-					.get();
+				// $http(src)
+				// 	.success(response => {
+				// 		template.insertAdjacentHTML('afterbegin', response);
+				// 		if(typeof callback === 'function') {
+				// 			callback(response);
+				// 		} else {
+				// 			if(callback != null) {
+				// 				console.error('Your callback is not defined in your code');
+				// 			}
+				// 		}
+				// 	})
+				// 	.error(() => {
+				// 		console.warn('Could not retrieve template');
+				// 	})
+				// 	.get();
 			});
 		}, 0);
 	}
 
+	function GetTemplate(url, callback, target) {
+		if(typeof $http === 'undefined') {
+			return console.log('The $http library is required. Get it here https://github.com/mlcheng/js-http');
+		}
+
+		$http(url)
+			.success(response => {
+				if(target) {
+					target.insertAdjacentHTML('afterbegin', response);
+				}
+				if(typeof callback === 'function') {
+					callback(response);
+				} else {
+					if(callback != null) {
+						console.error('Your callback is not defined');
+					}
+				}
+			})
+			.error(() => console.warn('Could not retrieve template'))
+			.cache() //TODO: Add option for toggling cache
+			.get();
+	}
+
 	return {
-		GetTemplates: GetTemplates
+		GetTemplates: GetTemplates,
+		GetTemplate: GetTemplate
 	};
 })();
 
