@@ -30,12 +30,12 @@ iqwerty.template = (function() {
 				var callback = element.dataset.iqTemplateLoaded;
 				callback = window[callback];
 
-				GetTemplate(src, callback, element);
+				GetTemplate(src, element, callback);
 			});
 		}, 0);
 	}
 
-	function GetTemplate(url, callback, target) {
+	function GetTemplate(url, target, callback) {
 		if(typeof $http === 'undefined') {
 			return console.log('The $http library is required. Get it here https://github.com/mlcheng/js-http');
 		}
