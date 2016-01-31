@@ -40,6 +40,7 @@ iqwerty.template = (function() {
 			return console.log('The $http library is required. Get it here https://github.com/mlcheng/js-http');
 		}
 
+		/* globals $http */
 		$http(url)
 			.success(response => {
 				if(target) {
