@@ -20,7 +20,10 @@ This will inject the `view.html` file into your `<div>`.
 That's it.
 
 ## Advanced usage
-You can also set a callback that will be called after the template is loaded.
+800 bytes doesn't mean no features. The iQwerty templating library still offers some advanced features that you may find useful.
+
+### Callbacks
+A callback can be set that will be called after the template is loaded.
 
 ```html
 <div
@@ -37,7 +40,16 @@ function handleView() {
 }
 ```
 
-## Data binding
-If you use the iQwerty data binding library, you can also bind data onto your template. You can get more information on the data binding library [here](https://github.com/mlcheng/js-binding), but the gist of it is that you set a callback to a one-time `iqwerty.binding.ParsePage()` call. The `ParsePage` will parse the page for handlebars and initialize them for binding. This assumes that the binding model has been set with `iqwerty.binding.Model()`.
+### Explicit template loading
+It is possible to load a template's content declaratively.
+
+```javascript
+iqwerty.template.GetTemplate(url, callback, target)
+```
+
+The first two argument are self-explanatory. The `target` can be used to set the HTML element where the template should be inserted.
+
+### Data binding
+If you use the iQwerty data binding library, you can also bind data onto your template. You can get more information on the data binding library [here](https://github.com/mlcheng/js-binding), but the gist of it is that you set a callback to a one-time `iqwerty.binding.Model()` call to set the binding model.`.
 
 Have fun!

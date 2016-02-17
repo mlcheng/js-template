@@ -19,10 +19,6 @@ iqwerty.template = (function() {
 
 	function GetTemplates() {
 		setTimeout(function() {
-			if(typeof $http === 'undefined') {
-				console.error('$http is not defined. Remember to include the iQwerty $http library in your code. Get it here https://github.com/mlcheng/js-http');
-				return;
-			}
 
 			var templates = document.querySelectorAll('[' + TEMPLATE_SRC_ATTR + ']');
 			[].slice.call(templates).forEach(element => {
@@ -30,12 +26,12 @@ iqwerty.template = (function() {
 				var callback = element.dataset.iqTemplateLoaded;
 				callback = window[callback];
 
-				GetTemplate(src, element, callback);
+				GetTemplate(src, callback, element);
 			});
 		}, 0);
 	}
 
-	function GetTemplate(url, target, callback) {
+	function GetTemplate(url, callback, target) {
 		if(typeof $http === 'undefined') {
 			return console.log('The $http library is required. Get it here https://github.com/mlcheng/js-http');
 		}
