@@ -50,6 +50,6 @@ iqwerty.template.GetTemplate(url, callback, target)
 The first two argument are self-explanatory. The `target` can be used to set the HTML element where the template should be inserted.
 
 ### Data binding
-If you use the iQwerty data binding library, you can also bind data onto your template. You can get more information on the data binding library [here](https://github.com/mlcheng/js-binding), but the gist of it is that you set a callback to a one-time `iqwerty.binding.Model()` call to set the binding model.`.
+If you use the iQwerty data binding library, you can also bind data onto your template. You can get more information on the data binding library [here](https://github.com/mlcheng/js-binding), but the gist of it is that you set a callback to a one-time `iqwerty.binding.Model()` call to set the binding model.
 
 Have fun!
