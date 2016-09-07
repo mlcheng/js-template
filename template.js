@@ -19,6 +19,24 @@ iqwerty.template = (function() {
 
 	var TEMPLATE_SRC_ATTR = 'data-iq-template-src';
 
+	/**
+	 * Parse a function name to the actual function
+	 * Supports functions inside objects
+	 * @param  {String} fn The name of the function
+	 * @return {Function}      Returns the function, or null if no function exists
+	 */
+	function _parseCallback(fn) {
+		let ns = fn.split('.');
+
+		// Return the global function if there is no namespace
+		if(ns.length === 1) return window[fn];
+
+		let obj = window[ns.shift()], f = ns.pop();
+		obj = ns.reduce((o, n) => o[n], obj);
+
+		return obj[f];
+	}
+
 	function GetTemplates() {
 		setTimeout(function() {
 
@@ -26,7 +44,8 @@ iqwerty.template = (function() {
 			[].slice.call(templates).forEach(element => {
 				var src = element.dataset.iqTemplateSrc;
 				var callback = element.dataset.iqTemplateLoaded;
-				callback = window[callback];
+
+				callback = _parseCallback(callback);
 
 				GetTemplate(src, callback, element);
 			});
@@ -39,21 +58,21 @@ iqwerty.template = (function() {
 		}
 
 		$http(url)
-			.success(response => {
+			.error(() => console.warn('Could not retrieve template'))
+			.cache() // TODO: Add option for toggling cache
+			.get()
+			.then(template => {
 				if(target) {
-					target.insertAdjacentHTML('afterbegin', response);
+					target.insertAdjacentHTML('afterbegin', template);
 				}
 				if(typeof callback === 'function') {
-					callback(response);
+					callback(template);
 				} else {
 					if(callback != null) {
 						console.error('Your callback is not defined');
 					}
 				}
-			})
-			.error(() => console.warn('Could not retrieve template'))
-			.cache() //TODO: Add option for toggling cache
-			.get();
+			});
 	}
 
 	return {
