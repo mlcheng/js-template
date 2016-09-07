@@ -58,7 +58,6 @@ iqwerty.template = (function() {
 		}
 
 		$http(url)
-			.error(() => console.warn('Could not retrieve template'))
 			.cache() // TODO: Add option for toggling cache
 			.get()
 			.then(template => {
@@ -72,7 +71,8 @@ iqwerty.template = (function() {
 						console.error('Your callback is not defined');
 					}
 				}
-			});
+			})
+			.catch(() => console.warn('Could not retrieve template'));
 	}
 
 	return {
