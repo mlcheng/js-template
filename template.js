@@ -39,7 +39,6 @@ iqwerty.template = (function() {
 
 	function GetTemplates() {
 		setTimeout(function() {
-
 			var templates = document.querySelectorAll('[' + TEMPLATE_SRC_ATTR + ']');
 			[].slice.call(templates).forEach(element => {
 				var src = element.dataset.iqTemplateSrc;
@@ -49,7 +48,7 @@ iqwerty.template = (function() {
 
 				GetTemplate(src, callback, element);
 			});
-		}, 0);
+		});
 	}
 
 	function GetTemplate(url, callback, target) {
@@ -76,8 +75,8 @@ iqwerty.template = (function() {
 	}
 
 	return {
-		GetTemplates: GetTemplates,
-		GetTemplate: GetTemplate
+		GetTemplates,
+		GetTemplate,
 	};
 })();
 
