@@ -11,21 +11,19 @@
 
 'use strict';
 
-/* globals $http */
+import { http } from './../http/http';
 
-var iqwerty = iqwerty || {};
-
-iqwerty.template = (function() {
-
-	var TEMPLATE_SRC_ATTR = 'data-iq-template-src';
+export const template = (() => {
+	const TEMPLATE_SRC_ATTR = 'data-iq-template-src';
 
 	/**
 	 * Parse a function name to the actual function
 	 * Supports functions inside objects
-	 * @param  {String} fn The name of the function
-	 * @return {Function}      Returns the function, or null if no function exists
+	 * @param {string} fn The name of the function
+	 * @return {Function} Returns the function, or null if no function exists
 	 */
 	function _parseCallback(fn) {
+		if(!fn) return;
 		let ns = fn.split('.');
 
 		// Return the global function if there is no namespace
@@ -37,29 +35,25 @@ iqwerty.template = (function() {
 		return obj[f];
 	}
 
-	function GetTemplates() {
+	function loadTemplates() {
 		setTimeout(function() {
-			var templates = document.querySelectorAll('[' + TEMPLATE_SRC_ATTR + ']');
-			[].slice.call(templates).forEach(element => {
-				var src = element.dataset.iqTemplateSrc;
-				var callback = element.dataset.iqTemplateLoaded;
+			const templates = [...document.querySelectorAll('[' + TEMPLATE_SRC_ATTR + ']')];
+			templates.forEach((element) => {
+				const src = element.dataset.iqTemplateSrc;
+				const callback = element.dataset.iqTemplateLoaded;
+				const callbackFn = _parseCallback(callback);
 
-				callback = _parseCallback(callback);
-
-				GetTemplate(src, callback, element);
+				loadTemplate(src, callbackFn, element);
 			});
 		});
 	}
 
-	function GetTemplate(url, callback, target) {
-		if(typeof $http === 'undefined') {
-			return console.log('The $http library is required. Get it here https://github.com/mlcheng/js-http');
-		}
-
-		$http(url)
-			.cache() // TODO: Add option for toggling cache
+	function loadTemplate(url, callback, target) {
+		http.request(url)
+		 	// TODO: Add option for toggling cache
+			.cache()
 			.get()
-			.then(template => {
+			.then((template) => {
 				if(target) {
 					target.insertAdjacentHTML('afterbegin', template);
 				}
@@ -74,10 +68,7 @@ iqwerty.template = (function() {
 			.catch(() => console.warn('Could not retrieve template'));
 	}
 
-	return {
-		GetTemplates,
-		GetTemplate,
-	};
+	return { loadTemplate, loadTemplates };
 })();
 
-document.addEventListener('DOMContentLoaded', iqwerty.template.GetTemplates);
+document.addEventListener('DOMContentLoaded', template.loadTemplates);

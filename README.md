@@ -1,12 +1,10 @@
 # js-template
 
-Templating in 800 bytes - what could be better? This tiny library allows you to use a file template in your page. This removes the bad practice of writing HTML inside JavaScript.
-
-**The iQwerty [`http.js`](https://github.com/mlcheng/js-http) library is a required dependency for the Template.**
+Template loader in 800 bytes - what could be better? This tiny library allows you to use a file template in your page. This removes the bad practice of writing HTML inside JavaScript.
 
 It is recommended that the iQwerty [`binding.js`](https://github.com/mlcheng/js-binding) library be used in conjuction with this as well.
 
-A demo will be available on my playground soon.
+A demo is available on my [playground](https://playground.michaelcheng.us/lib-js/template/).
 
 ## Usage
 To use a template on your page, just
@@ -32,7 +30,7 @@ A callback can be set that will be called after the template is loaded.
 </div>
 ```
 
-Where `handleView` is a function name that must be in the `window` object (i.e. it must be global scope, sorry).
+Where `handleView` is a function name that must be accessible in the `window` scope (i.e. it must be global scope, sorry).
 
 ```javascript
 function handleView() {
@@ -44,12 +42,12 @@ function handleView() {
 It is possible to load a template's content declaratively.
 
 ```javascript
-iqwerty.template.GetTemplate(url, callback, target)
+iqwerty.template.loadTemplate(url, callback, target)
 ```
 
 The first two argument are self-explanatory. The `target` can be used to set the HTML element where the template should be inserted.
 
 ### Data binding
-If you use the iQwerty data binding library, you can also bind data onto your template. You can get more information on the data binding library [here](https://github.com/mlcheng/js-binding), but the gist of it is that you set a callback to a one-time `iqwerty.binding.Model()` call to set the binding model.
+If you use the iQwerty data binding library, you can also bind data onto your template. You can get more information on the data binding library [here](https://github.com/mlcheng/js-binding), but the gist of it is that you set a callback to a one-time `iqwerty.binding.model()` call to set the binding model.
 
 Have fun!
